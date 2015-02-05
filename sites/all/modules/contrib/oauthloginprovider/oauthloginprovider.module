@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Main module for OAuth login provider
+ */
+
+/**
+ * Implementation of hook_ctools_plugin_api().
+ */
+function oauthloginprovider_ctools_plugin_api($module, $api) {
+  if ($module == 'services' && $api == 'services') {
+    return array('version' => 3);
+  }
+  if ($module == 'oauth_common' && $api == 'oauth') {
+    return array('version' => 1);
+  }
+}
+
+/**
+ * Implements hook_permision().
+ */
+function oauthloginprovider_permission() {
+  return array(
+    'oauthloginprovider access info' => array(
+      'title' => t('Access information about the current user'),
+      'description' => t('Allows calling the user info web service.'),
+    ),
+  );
+}
+
+
+/**
+ * Implementation of hook_services_resources().
+ */
+function oauthloginprovider_services_resources() {
+  $res = array(
+    'oauthlogin' => array(
+      'actions' => array(
+        'info' => array(
+          'access callback' => 'user_access',
+          'access arguments' => array('oauthloginprovider access info'),
+          'access arguments append' => false,
+          'args' => array(),
+          'help' => 'Retrieves information about the current user',
+          'callback' => 'oauthloginprovider_user_info_action',
+        ),
+      ),
+    ),
+  );
+  return $res;
+}
+
+function oauthloginprovider_user_info_action() {
+  global $user;
+
+  $data = $user;
+  services_remove_user_data($data);
+
+  return $data;
+}
