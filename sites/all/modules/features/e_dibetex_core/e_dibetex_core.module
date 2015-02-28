@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the e-dibetex-core feature.
+ */
+
+include_once 'e_dibetex_core.features.inc';
