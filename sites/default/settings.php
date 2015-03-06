@@ -212,21 +212,6 @@
  *   );
  * @endcode
  */
-$databases = array (
-  'default' =>
-  array (
-    'default' =>
-    array (
-      'database' => 'e-diabetex',
-      'username' => 'e-diabetex',
-      'password' => '123',
-      'host' => '127.0.0.1',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-    ),
-  ),
-);
 
 /**
  * Access control for update.php script.
@@ -579,3 +564,7 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  * Remove the leading hash signs to disable.
  */
 # $conf['allow_authorize_operations'] = FALSE;
+
+if (file_exists('./'. conf_path() .'/local.settings.php')) {
+  include_once './'. conf_path() .'/local.settings.php';
+}
